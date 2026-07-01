@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>sketpixel — Pixel Art Asset Showcase & Game Portfolio</title>
+  <meta name="description" content="Katalog portofolio aset game 2D retro buatan sketpixel. Temukan paket GUI, set ikon cuaca, tombol neon cyberpunk, dan tileset lingkungan gratis & berbayar untuk game Anda.">
+  <meta name="keywords" content="pixel art, game assets, itch.io, sketpixel, retro gui, rpg hud, weather icons, 8-bit props, chibi slime sprites">
+  <meta name="author" content="sketpixel">
+  
+  <!-- Open Graph / Social Media Links -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="sketpixel — Pixel Art Asset Showcase">
+  <meta property="og:description" content="Temukan dan unduh aset game 2D retro berkualitas tinggi (GUI, Ikon, Karakter) dari sketpixel secara langsung di itch.io.">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css?v=1.1">
+</head>
+<body data-theme="synthwave" class="crt-active">
+
+  <!-- ================= CRT SCREEN EFFECT OVERLAYS ================= -->
+  <div class="crt-overlay">
+    <div class="crt-scanlines"></div>
+    <div class="crt-vignette"></div>
+  </div>
+
+  <!-- ================= WEBSITE HEADER & TOP CONTROL BAR ================= -->
+  <header>
+    <div class="header-container">
+      
+      <!-- Left Logo & Identity -->
+      <div class="logo-section">
+        <div class="logo-box" id="logo-branding-box">
+          <i data-lucide="gamepad-2" style="width: 22px; height: 22px; color: #ffffff;"></i>
+        </div>
+        <div class="logo-text">
+          <h1>
+            sketpixel
+            <span class="logo-badge">PORTFOLIO</span>
+          </h1>
+          <p style="font-size: 11px; opacity: 0.75; margin-top: 2px;">Pixel Art Game Assets Showcase</p>
+        </div>
+      </div>
+
+      <!-- Right Header Actions (Themes & CRT Settings) -->
+      <div class="controls-row">
+
+        <!-- Main Profile Link -->
+        <a href="https://sketpixel.itch.io/" target="_blank" rel="noopener noreferrer" class="btn-retro-primary" id="btn-main-itch-link">
+          <span>ITCH.IO</span>
+          <i data-lucide="external-link" style="width: 13px; height: 13px;"></i>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= HERO & CREATOR PROFILE SHOWCASE ================= -->
+  <section class="bio-section">
+    <div class="bio-grid" id="profile-showcase">
+      <!-- Diisi secara dinamis oleh JavaScript -->
+    </div>
+  </section>
+
+  <!-- ================= FILTER, SEARCH, & SORTING SECTION ================= -->
+  <section class="filter-section">
+    <div class="card-retro filter-card">
+      
+      <div class="filter-top-row">
+        <!-- Search -->
+        <div class="search-input-wrapper">
+          <i data-lucide="search" class="search-icon"></i>
+          <input 
+            type="text" 
+            id="search-input" 
+            class="search-input" 
+            placeholder="Cari aset game (mis. 'GUI', 'Ikon', 'Free')..."
+            autocomplete="off"
+          >
+          <button class="search-clear-btn" id="btn-clear-search" title="Hapus pencarian">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+
+        <!-- Price Selectors -->
+        <div class="price-filters">
+          <span class="price-label">Harga:</span>
+          <div class="price-group">
+            <button class="price-btn active" data-price-val="all">Semua</button>
+            <button class="price-btn" data-price-val="free">Gratis</button>
+            <button class="price-btn" data-price-val="paid">Berbayar</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CORE CATALOG GALLERY GRID ================= -->
+  <main class="gallery-section">
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- Diisi secara dinamis oleh JavaScript -->
+    </div>
+  </main>
+
+  <!-- ================= DETAILED SPECS MODAL LIGHTBOX ================= -->
+  <div class="modal-backdrop" id="asset-detail-modal">
+    <!-- Konten diisi secara dinamis saat tombol Quick View diklik -->
+  </div>
+
+
+  <!-- ================= WEBSITE FOOTER ================= -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-left">
+        <span>© 2026</span>
+        <strong>sketpixel</strong>
+        <span>• Seluruh aset bernaung di bawah payung hak cipta masing-masing.</span>
+      </div>
+      <div class="footer-right">
+        <span>Dibuat dengan</span>
+        <i data-lucide="heart" class="heart-icon"></i>
+        <span>oleh solo-builder untuk komunitas game dev.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Supabase SDK & Configuration -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+
+  <!-- Lucide Icon Library (CDN) & Core JS -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

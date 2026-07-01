@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — sketpixel</title>
+  
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="style.css?v=1.1">
+  <link rel="stylesheet" href="admin.css?v=1.1">
+</head>
+<body data-theme="synthwave" class="crt-active">
+
+  <!-- ================= CRT SCREEN EFFECT OVERLAYS ================= -->
+  <div class="crt-overlay">
+    <div class="crt-scanlines"></div>
+    <div class="crt-vignette"></div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Loading Overlay -->
+  <div class="admin-loading-overlay" id="loading-overlay">
+    <div class="loader-box">
+      <div class="pixel-spinner"></div>
+      <p style="margin-top: 10px; font-family: monospace;">LOADING DATABASE...</p>
+    </div>
+  </div>
+
+  <!-- ================= AUTHENTICATION / LOGIN PANEL ================= -->
+  <section class="auth-section" id="auth-section">
+    <div class="card-retro auth-card">
+      <div class="auth-header">
+        <div class="logo-box" style="margin: 0 auto 15px auto; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--primary); border: 2px solid #ffffff; box-shadow: 4px 4px 0px #000000;">
+          <i data-lucide="shield-check" style="width: 24px; height: 24px; color: #ffffff;"></i>
+        </div>
+        <h2>SKETPIXEL ADMIN</h2>
+        <p>Silakan login untuk mengelola paket katalog portofolio.</p>
+      </div>
+      
+      <form id="login-form">
+        <div class="form-group">
+          <label for="login-email">EMAIL ADMIN</label>
+          <div class="input-wrapper">
+            <i data-lucide="mail" class="input-icon"></i>
+            <input type="email" id="login-email" required placeholder="nama@email.com" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">PASSWORD</label>
+          <div class="input-wrapper">
+            <i data-lucide="lock" class="input-icon"></i>
+            <input type="password" id="login-password" required placeholder="••••••••" autocomplete="current-password">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-retro-primary w-full" style="margin-top: 1rem; justify-content: center; height: 42px;">
+          <span>MASUK SISTEM</span>
+          <i data-lucide="log-in" style="width: 16px; height: 16px;"></i>
+        </button>
+      </form>
+      
+      <div style="margin-top: 1.5rem; text-align: center;">
+        <a href="index.html" class="back-link">
+          <i data-lucide="arrow-left" style="width: 12px; height: 12px;"></i>
+          Kembali ke Portofolio
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MAIN ADMIN DASHBOARD PANEL ================= -->
+  <section class="admin-dashboard-section hidden" id="dashboard-section">
+    
+    <!-- Top Nav Bar -->
+    <header class="admin-header">
+      <div class="header-container">
+        <div class="logo-section">
+          <div class="logo-box" style="background: var(--accent); border: 2px solid #ffffff;">
+            <i data-lucide="sliders" style="width: 18px; height: 18px; color: #ffffff;"></i>
+          </div>
+          <div class="logo-text">
+            <h1 style="font-size: 16px;">
+              sketpixel <span class="logo-badge" style="background: var(--accent);">DASHBOARD</span>
+            </h1>
+            <p style="font-size: 11px; opacity: 0.75;" id="admin-user-email">admin@sketpixel.com</p>
+          </div>
+        </div>
+        
+        <div class="controls-row">
+          <a href="index.html" target="_blank" class="btn-retro" style="font-size: 11px; padding: 6px 12px;">
+            <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
+            Lihat Portofolio
+          </a>
+          <button class="btn-retro-danger" id="btn-logout" style="font-size: 11px; padding: 6px 12px;">
+            <span>LOGOUT</span>
+            <i data-lucide="log-out" style="width: 14px; height: 14px;"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <div class="admin-grid-container">
+      
+      <!-- Left Column: Assets List -->
+      <div class="admin-panel-left">
+        <div class="card-retro" style="height: 100%; display: flex; flex-direction: column;">
+          <div class="panel-header">
+            <h3>
+              <i data-lucide="package" style="width: 16px; height: 16px; color: var(--primary);"></i>
+              Daftar Paket Katalog
+            </h3>
+            <span class="count-badge" id="asset-count">0 Paket</span>
+          </div>
+
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Preview</th>
+                  <th>Judul / Kategori</th>
+                  <th>Harga</th>
+                  <th style="text-align: right;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="assets-table-body">
+                <!-- Diisi secara dinamis oleh admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Add/Edit Form -->
+      <div class="admin-panel-right">
+        <div class="card-retro">
+          <div class="panel-header">
+            <h3 id="form-title">
+              <i data-lucide="plus-circle" style="width: 16px; height: 16px; color: var(--accent);"></i>
+              Tambah Paket Baru
+            </h3>
+            <button class="btn-retro hidden" id="btn-cancel-edit" style="font-size: 10px; padding: 4px 8px;">
+              Batal Edit
+            </button>
+          </div>
+
+          <form id="asset-form" class="admin-form">
+            <!-- Hidden ID field for editing -->
+            <input type="hidden" id="asset-db-id">
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="asset-id">ID / SLUG (Unik, mis. 'my-new-gui')</label>
+                <input type="text" id="asset-id" required placeholder="retro-gui-pack" pattern="[a-z0-9\-]+" title="Hanya huruf kecil, angka, dan tanda hubung (-)">
+              </div>
+              <div class="form-group">
+                <label for="asset-title">JUDUL PAKET ASET</label>
+                <input type="text" id="asset-title" required placeholder="Retro RPG Icons Pack">
+              </div>
+            </div>
+
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label for="asset-category">KATEGORI</label>
+                <select id="asset-category" required>
+                  <option value="gui">GUI / Antarmuka</option>
+                  <option value="icons">Icons / Ikon</option>
+                  <option value="buttons">Buttons / Tombol</option>
+                  <option value="environment">Environment / Lingkungan</option>
+                  <option value="characters">Characters / Karakter</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="asset-price">HARGA (USD)</label>
+                <input type="number" id="asset-price" step="0.01" min="0" value="0.00" required>
+              </div>
+              <div class="form-group">
+                <label for="asset-is-free" style="margin-bottom: 8px;">TIPE AKSES</label>
+                <div class="toggle-checkbox-wrapper">
+                  <input type="checkbox" id="asset-is-free" checked>
+                  <label for="asset-is-free" class="toggle-label-btn">Gratis (FREE)</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="asset-tags">TAGS (Pemisah koma, mis. 'GUI, RPG, Retro')</label>
+              <input type="text" id="asset-tags" required placeholder="GUI, RPG, 16-Bit, HUD">
+            </div>
+
+            <div class="form-group">
+              <label for="asset-short-desc">DESKRIPSI SINGKAT (Max 120 Karakter)</label>
+              <input type="text" id="asset-short-desc" required maxlength="120" placeholder="Paket GUI bertema fantasi untuk game RPG Anda.">
+            </div>
+
+            <div class="form-group">
+              <label for="asset-long-desc">DESKRIPSI LENGKAP</label>
+              <textarea id="asset-long-desc" rows="4" required placeholder="Didesain khusus untuk mempermudah developer game. Paket ini mencakup..."></textarea>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="asset-itch-url">URL ITCH.IO</label>
+                <input type="url" id="asset-itch-url" required placeholder="https://sketpixel.itch.io/nama-aset">
+              </div>
+              <div class="form-group">
+                <label for="asset-version">VERSI RILIS</label>
+                <input type="text" id="asset-version" placeholder="v1.0" value="v1.0" required>
+              </div>
+            </div>
+
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label for="asset-grid">GRID RESOLUSI</label>
+                <input type="text" id="asset-grid" placeholder="16x16" value="16x16" required>
+              </div>
+              <div class="form-group">
+                <label for="asset-format">FORMAT BERKAS</label>
+                <input type="text" id="asset-format" placeholder="PNG, Aseprite" value="PNG" required>
+              </div>
+              <div class="form-group">
+                <label for="asset-license">LISENSI</label>
+                <input type="text" id="asset-license" placeholder="CC BY 4.0" value="CC BY 4.0" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="asset-colors">WARNA PALET (Pemisah koma, mis. '#000000, #FFFFFF')</label>
+              <input type="text" id="asset-colors" placeholder="#2e222f, #ffd541, #ff5277" required>
+              <div class="color-preview-row" id="form-color-preview"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="asset-svg">KODE PREVIEW SVG (Inline XML SVG)</label>
+              <textarea id="asset-svg" rows="5" required placeholder="&lt;svg viewBox=&quot;0 0 100 100&quot; class=&quot;w-full h-full bg-slate-900&quot;&gt;&#10;  &lt;rect x=&quot;20&quot; y=&quot;20&quot; width=&quot;60&quot; height=&quot;60&quot; fill=&quot;#ff5277&quot;/&gt;&#10;&lt;/svg&gt;"></textarea>
+              <div class="svg-live-preview-box" id="form-svg-preview-box">
+                <span class="preview-placeholder">Live Preview Aset</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-retro-accent w-full" id="btn-submit-asset" style="margin-top: 1.5rem; justify-content: center; height: 42px;">
+              <i data-lucide="save" style="width: 16px; height: 16px;"></i>
+              <span id="btn-submit-text">SIMPAN PAKET ASET</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Supabase & Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="admin.js" defer></script>
+</body>
+</html>
