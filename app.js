@@ -454,18 +454,6 @@ function renderGallery() {
           <span class="asset-badge-price ${asset.isFree ? 'badge-free' : 'badge-paid'}">
             ${asset.isFree ? 'FREE' : `$${asset.price}`}
           </span>
-
-          <!-- Overlay Hover Menu -->
-          <div class="asset-hover-overlay">
-            <button class="asset-hover-btn hover-btn-spec btn-trigger-detail" data-id="${asset.id}">
-              <i data-lucide="maximize-2" style="width: 12px; height: 12px;"></i>
-              Detail Spek
-            </button>
-            <a href="${asset.itchUrl}" target="_blank" rel="noopener noreferrer" class="asset-hover-btn hover-btn-dl">
-              <i data-lucide="download" style="width: 12px; height: 12px;"></i>
-              Unduh Aset
-            </a>
-          </div>
         </div>
 
         <!-- Body Content -->
@@ -707,13 +695,18 @@ function checkUrlHash() {
 function setupEventListeners() {
   // A. Delegasi click untuk tombol di grid / modal (karena data dimuat dinamis)
   document.addEventListener('click', (e) => {
-    // 1. Detail modal trigger
-    const detailBtn = e.target.closest('.btn-trigger-detail');
-    if (detailBtn) {
-      const assetId = detailBtn.getAttribute('data-id');
-      const asset = ASSETS_DATA.find(a => a.id === assetId);
-      if (asset) setState({ selectedAsset: asset });
-      return;
+    // 1. Detail modal trigger (when clicking a package card or info detail button)
+    const card = e.target.closest('.group-card');
+    if (card) {
+      const shareBtn = e.target.closest('.btn-trigger-share');
+      const unduhLink = e.target.closest('.btn-text-retro');
+      
+      if (!shareBtn && !unduhLink) {
+        const assetId = card.getAttribute('data-asset-id');
+        const asset = ASSETS_DATA.find(a => a.id === assetId);
+        if (asset) setState({ selectedAsset: asset });
+        return;
+      }
     }
 
     // 2. Share button trigger

@@ -429,6 +429,10 @@ header {
   box-shadow: 7px 7px 0px 0px var(--shadow-color);
 }
 
+.group-card {
+  cursor: pointer;
+}
+
 /* 4. Bio Section & Stats Layout */
 .bio-section {
   max-width: 1200px;
@@ -996,61 +1000,6 @@ header {
   color: var(--badge-paid-text);
   border-color: var(--badge-paid-border);
   font-weight: 800;
-}
-
-/* Overlay Quick View on Hover */
-.asset-hover-overlay {
-  position: absolute;
-  inset: 0;
-  background-color: rgba(2, 6, 23, 0.85);
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  transition: opacity 0.25s ease;
-  z-index: 10;
-}
-
-.card-retro:hover .asset-hover-overlay {
-  opacity: 1;
-}
-
-.asset-hover-btn {
-  padding: 6px 12px;
-  font-size: 11px;
-  font-weight: 700;
-  border-radius: 4px;
-  border: 1px solid #ffffff;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  transition: transform 0.15s;
-  text-decoration: none;
-}
-
-.asset-hover-btn:active {
-  transform: scale(0.95);
-}
-
-.hover-btn-spec {
-  background-color: #ffffff;
-  color: #0f172a;
-}
-
-.hover-btn-spec:hover {
-  background-color: #f1f5f9;
-}
-
-.hover-btn-dl {
-  background-color: #e11d48;
-  color: #ffffff;
-  border-color: #f43f5e;
-}
-
-.hover-btn-dl:hover {
-  background-color: #f43f5e;
 }
 
 /* Card Body Content */
